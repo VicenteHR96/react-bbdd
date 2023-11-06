@@ -11,43 +11,48 @@ import Buscador from "./components/buscador/Buscador";
 
 const App = () => {
   const [colaboradores, setColaboradores] = useState(baseColaboradores);
+  const [colaboradoresOriginal, setColaboradoresOriginal] =
+    useState(baseColaboradores);
 
   const [alert, setAlert] = useState({ color: "", mensaje: "" });
 
   return (
-    <>
+    <div className="container">
       <div className="mx-4">
-        <h1 className="text-start">Lista de colaboradores</h1>
-        <Row>
-          <Col sm={4}>
-            {/* Crear componente Buscador */}
-            <Buscador></Buscador>
-          </Col>
-        </Row>
         <Row>
           <Col sm={12} md={9}>
-            {/* Crear componente Listado */}
-            <h2>Buscador</h2>
-            <Listado colaboradores={colaboradores}></Listado>
+            <Card>
+              <h1 className="text-start">Lista de colaboradores</h1>
+
+              {/* Crear componente Buscador */}
+              <Buscador
+                setColaboradores={setColaboradores}
+                colaboradores={colaboradores}
+                colaboradoresOriginal={colaboradoresOriginal}
+              ></Buscador>
+
+              {/* Crear componente Listado */}
+
+              <Listado colaboradores={colaboradores}></Listado>
+            </Card>
           </Col>
-          <Col md={3} className="">
+          <Col md={3}>
             <Card>
               <h2>Agregar colaborador</h2>
               {/* Crear componente Formulario */}
               <Formulario
                 setAlert={setAlert}
                 setColaboradores={setColaboradores}
+                setColaboradoresOriginal={setColaboradoresOriginal}
                 colaboradores={colaboradores}
               ></Formulario>
               {/* Crear componente Alerta */}
-              {alert.mensaje !== "" && (
-                <Alert variant={alert.color}>{alert.mensaje}</Alert>
-              )}
+              {alert.mensaje !== "" && <Alert mensaje={alert}></Alert>}
             </Card>
           </Col>
         </Row>
       </div>
-    </>
+    </div>
   );
 };
 

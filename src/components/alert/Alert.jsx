@@ -1,5 +1,9 @@
 import { Alert as AlertB } from "react-bootstrap";
 
-export const Alert = ({ children }) => {
-  return <AlertB>{children}</AlertB>;
+export const Alert = ({ mensaje }) => {
+  return (
+    <AlertB className="alert" variant={mensaje.color}>
+      {mensaje.mensaje}
+    </AlertB>
+  );
 };

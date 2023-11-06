@@ -29,8 +29,29 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  justify-content: center;
+  background: linear-gradient(45deg, #d2001a, #7462ff, #f48e21, #23d5ab);
+  background-size: 300% 300%;
+  animation: color 12s ease-in-out infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+@keyframes color {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+.container {
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -61,14 +82,31 @@ button:focus-visible {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.662);
   gap: 1rem;
+}
+
+.cont-buscador {
+  display: flex;
+  gap: 1rem;
+  width: 95%;
+  justify-content: center;
+}
+
+.input-buscar {
+  height: 100%;
+}
+
+.form-registro {
+  margin-bottom: 0.6rem;
+}
+
+.alert {
+  text-align: center;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
   }
   a:hover {
     color: #747bff;

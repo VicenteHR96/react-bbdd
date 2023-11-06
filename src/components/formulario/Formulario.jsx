@@ -2,9 +2,14 @@ import { Button, Form, FormControl, FormGroup } from "react-bootstrap";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-let myuuid = uuidv4();
-
-export const Formulario = ({ setAlert, setColaboradores, colaboradores }) => {
+export const Formulario = ({
+  setAlert,
+  setColaboradores,
+  setColaboradoresOriginal,
+  colaboradores,
+}) => {
+  let myuuid = uuidv4();
+  const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
   const [formulario, setFormulario] = useState({
     name: "",
     correo: "",
@@ -19,6 +24,11 @@ export const Formulario = ({ setAlert, setColaboradores, colaboradores }) => {
   const onsubmit = (e) => {
     e.preventDefault();
 
+    setAlert({
+      color: "success",
+      mensaje: "Has agregado a un colaborador.",
+    });
+
     if (
       formulario.nombre == "" ||
       formulario.correo == "" ||
@@ -28,8 +38,13 @@ export const Formulario = ({ setAlert, setColaboradores, colaboradores }) => {
     ) {
       setAlert({
         color: "danger",
-        mensaje: "Debe completar todos los campos",
+        mensaje: "Debes completar todos los campos.",
       });
+      return;
+    }
+
+    if (!validEmail.test(formulario.correo)) {
+      setAlert({ mensaje: "Correo electrónico inválido.", color: "danger" });
       return;
     }
 
@@ -45,6 +60,16 @@ export const Formulario = ({ setAlert, setColaboradores, colaboradores }) => {
     // id único / UUID Librería
     const nuevoColaborador = { ...formulario, id: myuuid };
     setColaboradores([...colaboradores, nuevoColaborador]);
+    setColaboradoresOriginal([...colaboradores, nuevoColaborador]);
+    console.log(nuevoColaborador);
+
+    setFormulario({
+      nombre: "",
+      correo: "",
+      edad: "",
+      cargo: "",
+      telefono: "",
+    });
   };
 
   return (
@@ -53,34 +78,39 @@ export const Formulario = ({ setAlert, setColaboradores, colaboradores }) => {
         <Form.Control
           name="nombre"
           type="text"
-          placeholder="Enter Name"
+          placeholder="Nombre"
           onChange={onchange}
+          className="form-registro"
         ></Form.Control>
         <Form.Control
           name="correo"
           type="email"
-          placeholder="Enter Email"
+          placeholder="Correo Electrónico"
           onChange={onchange}
+          className="form-registro"
         ></Form.Control>
         <Form.Control
           name="edad"
           type="number"
-          placeholder="Enter Age"
+          placeholder="Edad"
           onChange={onchange}
+          className="form-registro"
         ></Form.Control>
         <Form.Control
           name="cargo"
           type="text"
-          placeholder="Enter Charge"
+          placeholder="Cargo"
           onChange={onchange}
+          className="form-registro"
         ></Form.Control>
         <Form.Control
           name="telefono"
           type="number"
-          placeholder="Enter Mobile Number"
+          placeholder="Número Telefónico"
           onChange={onchange}
+          className="form-registro"
         ></Form.Control>
-        <Button variant="primary" type="submit" className="w-100">
+        <Button variant="warning" type="submit" className="w-100">
           Agregar Colaborador
         </Button>
       </Form.Group>
